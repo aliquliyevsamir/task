@@ -19,7 +19,7 @@ async def shorten_url(request: URLRequest):
     url_db[short_id] = request.url
     return {"short_url": f"http://127.0.0.1:8080/{short_id}"}
 
-# <-- сюда переносим get_random_number
+
 @app.get("/random")
 async def get_random_number():
     async with httpx.AsyncClient() as client:
@@ -30,7 +30,7 @@ async def get_random_number():
         return {"random_number": resp.json()[0]}
     raise HTTPException(status_code=500, detail="Не удалось получить число")
 
-# <-- а потом «ловушка»
+
 @app.get("/{short_id}")
 async def redirect_to_original(short_id: str):
     if short_id not in url_db:
